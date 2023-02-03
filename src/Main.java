@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
+
         Scanner scanner = new Scanner(System.in);
 
         OnlineOrderQueue orderQueue = new OnlineOrderQueue();
@@ -62,7 +64,9 @@ public class Main {
         System.out.println("____ Listy produktów klientów");
         Customer1.showListOfProducts();
         Customer2.showListOfProducts();
+        CustomerGUI customerGUI = new CustomerGUI();
 
+        EmployeeGUI employeeGUI = new EmployeeGUI();
 
 
 
@@ -100,6 +104,7 @@ public class Main {
         Product1.changePrice(9.99);
         // Sprawdzamy zedytowany produkt
         System.out.println(Product1);
+        System.out.println(Customer4.getCustomerID());
 
         // Pobieramy dane użytkowników z pliku .csv
         List<Customer> downloadedCustomerData = downloadData.downloadCustomerData("customerData1.csv");

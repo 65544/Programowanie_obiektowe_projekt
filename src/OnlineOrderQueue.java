@@ -33,4 +33,8 @@ public String toString() {
     return "____ Queue:" +queueString +
             "\n";
 }
+
+    public Queue<Order> getOrders() {
+        return orderQueue;
+    }
 }

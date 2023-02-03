@@ -1,18 +1,26 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductManagement extends OnlineOrderQueue {
-    List<Product> products = new ArrayList<>();
+    static List<Product> products = new ArrayList<>();
+    static HashMap<String, Product> productHashMap = new HashMap<>();
+    private static int productID = 1;
 
-
-    public void addProduct(Product product){
-
+    public static void addProduct(Product product){
         products.add(product);
+        productHashMap.put("Product"+productID,product);
+        productID++;
     }
 
-    public void removeProduct(Product product)
+    public static void removeProduct(Product product)
     {
+
         products.remove(product);
+    }
+
+    public static List<Product> getProducts() {
+        return products;
     }
 
     @Override
