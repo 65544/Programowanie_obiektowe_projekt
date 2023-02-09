@@ -4,7 +4,9 @@ import java.util.List;
 
 public class Customer {
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
-    private int customerID=0;
+
+    private String username;
+    private String password;
     private String name;
     private String address;
     private static double totalPrice;
@@ -19,10 +21,19 @@ public class Customer {
         }
 
 
-    public Customer(String name, String address) {
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Customer(String name, String address, String username, String password) {
         this.name = name;
         this.address = address;
-        customerID++;
+        this.username = username;
+        this.password = password;
     }
 
     public String getName() {
@@ -44,14 +55,10 @@ public class Customer {
             System.out.println("\u2022"+product);
         }
     }
-
-    public int getCustomerID() {
-        return customerID;
-    }
-
     @Override
     public String toString() {
-        return "Name: " + name + ", Address: " + address + ", Total price of the order: " + decfor.format(totalPrice);
+        return "Name: " + name + ", Address: " + address + ", Total price of the order: " + decfor.format(totalPrice)
+                + "\n \t " + getListOfProducts();
     }
 
 }

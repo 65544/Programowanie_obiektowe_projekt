@@ -1,14 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CustomerManagement extends OnlineOrderQueue {
 
     static List<Customer> customers = new ArrayList<>();
+    static HashMap<String, Customer> customerHashMap = new HashMap<>();
+    private static int customerID = 1;
 
 
     public static void addCustomer(Customer customer){
 
         customers.add(customer);
+        customerHashMap.put("Customer"+customerID, customer);
+        customerID++;
     }
 
     public static Customer getCustomer(String customerName) {

@@ -34,7 +34,7 @@ public class DownloadData implements DownloadInterface {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
-                Customer customer = new Customer(values[0], values[1]);
+                Customer customer = new Customer(values[0], values[1], values[2], values[3]);
                 customers.add(customer);
             }
         } catch (IOException e) {

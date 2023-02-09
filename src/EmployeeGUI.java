@@ -24,6 +24,16 @@ public class EmployeeGUI {
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setVisible(true);
 
+        Timer refreshTimer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                customersList.setListData(CustomerManagement.customerHashMap.entrySet().toArray());
+            }
+        });
+        refreshTimer.start();
+
+
+
         // Populate customers list
         customersList.setListData(CustomerManagement.getCustomers().toArray());
         productsList.setListData(ProductManagement.getProducts().toArray());
