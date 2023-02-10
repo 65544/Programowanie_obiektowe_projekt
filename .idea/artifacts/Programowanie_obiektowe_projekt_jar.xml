@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Programowanie_obiektowe_projekt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Programowanie_obiektowe_projekt_jar</output-path>
+    <root id="archive" name="Programowanie_obiektowe_projekt.jar">
+      <element id="module-output" name="Programowanie_obiektowe_projekt" />
+    </root>
+  </artifact>
+</component>
