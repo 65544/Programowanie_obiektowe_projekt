@@ -2,9 +2,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class OnlineOrderQueue extends OrderQueue {
-    Queue<Order> orderQueue = new LinkedList<>();
+    static Queue<Order> orderQueue = new LinkedList<>();
     // Metoda pozwalająca dodać zamówienie do kolejki
-    public void addOrder(Order order) {
+    public static void addOrder(Order order) {
         try {
             if (order.getListOfProducts().isEmpty()) {
                 throw new IllegalArgumentException ();

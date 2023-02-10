@@ -19,15 +19,16 @@ public class EmployeeGUI {
 
     public EmployeeGUI() {
         jframe.setContentPane(mainPanel);
-        jframe.setSize(500, 500);
+        jframe.setSize(1500, 500);
         jframe.setTitle("Employee GUI");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setVisible(true);
 
-        Timer refreshTimer = new Timer(10000, new ActionListener() {
+        Timer refreshTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 customersList.setListData(CustomerManagement.customerHashMap.entrySet().toArray());
+                ordersList.setListData(OnlineOrderQueue.orderQueue.toArray());
             }
         });
         refreshTimer.start();
@@ -43,8 +44,10 @@ public class EmployeeGUI {
             public void actionPerformed(ActionEvent e) {
                 // Retrieve order from queue
                 Order order = orderQueue.getOrder();
-
                 // Update orders list
+                order.getCustomer().clearTotalPrice();
+                order.getListOfProducts().clear();
+
                 ordersList.setListData(orderQueue.getOrders().toArray());
             }
         });

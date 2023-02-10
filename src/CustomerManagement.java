@@ -8,6 +8,9 @@ public class CustomerManagement extends OnlineOrderQueue {
     static HashMap<String, Customer> customerHashMap = new HashMap<>();
     private static int customerID = 1;
 
+    public static int getCustomerID() {
+        return customerID;
+    }
 
     public static void addCustomer(Customer customer){
 

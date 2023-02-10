@@ -1,7 +1,8 @@
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Order {
-
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");
     private List<Product> listOfProducts;
     private Customer customer;
 
@@ -33,8 +34,10 @@ public class Order {
 
     @Override
     public String toString() {
-        return customer.getName()+ "'s" + " Order{" +
-                ", customer=" + customer +
+        return customer.getUsername()+ "'s" + " Order{" +
+                "Name: " + customer.getName() + ", Address: " + customer.getAddress()
+                + ", Total price of the order: " + customer.getTotalPrice()
+                + "$ " + customer.getListOfProducts()+
                 '}';
     }
 }

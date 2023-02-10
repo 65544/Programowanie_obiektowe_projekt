@@ -9,11 +9,16 @@ public class Customer {
     private String password;
     private String name;
     private String address;
-    private static double totalPrice;
-    private static List<Product> listOfProducts = new ArrayList<>();
+    private double totalPrice;
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    private List<Product> listOfProducts = new ArrayList<>();
 
 
-        public static void addProductToCart(Product product, int quantity) {
+        public void addProductToCart(Product product, int quantity) {
             for (int i = 0; i < quantity; i++) {
                 listOfProducts.add(product);
                 totalPrice += product.getPrice();
@@ -34,6 +39,7 @@ public class Customer {
         this.address = address;
         this.username = username;
         this.password = password;
+
     }
 
     public String getName() {
@@ -47,6 +53,11 @@ public class Customer {
     public List<Product> getListOfProducts() {
         return listOfProducts;
     }
+
+    public void clearTotalPrice() {
+        totalPrice = 0;
+    }
+
     public void showListOfProducts()
     {
         System.out.println(this);
@@ -56,9 +67,11 @@ public class Customer {
         }
     }
     @Override
+
     public String toString() {
-        return "Name: " + name + ", Address: " + address + ", Total price of the order: " + decfor.format(totalPrice)
-                + "\n \t " + getListOfProducts();
+        return "@"+ username + " <Name: " + name + ", Address: " + address + ">";
+                //+ ", Total price of the order: " + decfor.format(totalPrice)
+                //+ "\n \t " + getListOfProducts();
     }
 
 }

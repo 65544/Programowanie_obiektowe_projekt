@@ -1,10 +1,9 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CustomerGUI{
     JFrame jframe = new JFrame();
@@ -25,9 +24,13 @@ public class CustomerGUI{
     private JPanel loginPanel;
     private JPanel registerPanel;
     private JLabel loggedAsLabel;
+    private JLabel userLoggedInLabel;
+    private JButton placeOrderButton;
+
 
     // Declare HashMap here
-    HashMap<String,List<Product>> customerProductsMap = new HashMap<>();
+    HashMap<Customer,List<Product>> customerProductsMap = new HashMap<>();
+    HashMap<String,Customer> usernameCustomerMap = new HashMap<>();
     HashMap<String, String> usernamePasswordMap = new HashMap<>();
 
 
@@ -60,7 +63,7 @@ public class CustomerGUI{
         refreshTimer.start();
 
         jframe.setContentPane(mainPanel);
-        jframe.setSize(500, 500);
+        jframe.setSize(1500, 500);
         jframe.setTitle("Customer GUI");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setVisible(true);
@@ -80,8 +83,9 @@ public class CustomerGUI{
                     // Create customer with data from text fields
                     Customer customer = new Customer(nameTextField.getText(), addressTextField.getText(), usernameTextField.getText(), String.valueOf(passwordField2.getPassword()));
                     CustomerManagement.addCustomer(customer);
-                    customerProductsMap.put(customer.getUsername(), new ArrayList<>());
+                    customerProductsMap.put(customer, new ArrayList<>());
                     usernamePasswordMap.put(usernameTextField.getText(), String.valueOf(passwordField2.getPassword()));
+                    usernameCustomerMap.put(usernameTextField.getText(), customer);
                 }
             }
         });
@@ -90,33 +94,48 @@ public class CustomerGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Get product and customer from GUI
+                Customer customer = usernameCustomerMap.get(userLoggedInLabel.getText());
+
                 Product product = (Product) productsList.getSelectedValue();
 
-                Customer customer = CustomerManagement.getCustomer(customerNameTextField.getText());
-
-                // Add product to customer's list of products
-                assert customer != null;
-                List<Product> products = customerProductsMap.get(customer.getUsername());
-                if (products == null) {
-                    products = new ArrayList<>();
-                    customerProductsMap.put(customer.getUsername(), products);
+                if (productsList.isSelectionEmpty())
+                {
+                    JOptionPane.showMessageDialog(jframe, "Please choose a product!",
+                            "Product not chosen", JOptionPane.ERROR_MESSAGE);
                 }
-                products.add(product);
+                else if (userLoggedInLabel.getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(jframe, "Please log in!",
+                            "User not logged in", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    // Add product to customer's list of products
+                    List<Product> products = customer.getListOfProducts();
+                    if (products == null) {
+                        products = new ArrayList<>();
+                        customerProductsMap.put(customer, products);
+                    }
+                    customer.addProductToCart(product, 1);
 
-                // Update customer's product list
-                customerProductsList.setListData(products.toArray());
+                    // Update customer's product list
+                    customerProductsList.setListData(products.toArray());
+                }
             }
         });
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 String username = loginTextField.getText();
                 String password = String.valueOf(passwordField1.getPassword());
                 if (usernamePasswordMap.containsKey(loginTextField.getText()))
                 {
                     if((usernamePasswordMap.get(loginTextField.getText()).equals(password)))
                     {
-                        loggedAsLabel.setText("Logged as: " + loginTextField.getText());
+                        userLoggedInLabel.setText(loginTextField.getText());
+                        customerProductsList.setListData(usernameCustomerMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
+
                     }
                     else
                     {
@@ -130,6 +149,19 @@ public class CustomerGUI{
                     JOptionPane.showMessageDialog(jframe, "Username doesn't exist!",
                             "Wrong username", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        placeOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Customer customer = usernameCustomerMap.get(userLoggedInLabel.getText());
+                List<Product> products = customer.getListOfProducts();
+                Order order = new Order(products, customer);
+                OnlineOrderQueue.addOrder(order);
+                customerProductsList.setModel(new DefaultListModel());
+//                products.clear();
+//                customer.clearTotalPrice();
+//                customerProductsList.setListData(usernameCustomerMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
             }
         });
     }}
