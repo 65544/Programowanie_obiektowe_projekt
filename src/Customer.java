@@ -39,9 +39,7 @@ public class Customer {
         this.address = address;
         this.username = username;
         this.password = password;
-
     }
-
     public String getName() {
         return name;
     }
@@ -57,21 +55,10 @@ public class Customer {
     public void clearTotalPrice() {
         totalPrice = 0;
     }
-
-    public void showListOfProducts()
-    {
-        System.out.println(this);
-        for (Product product: getListOfProducts())
-        {
-            System.out.println("\u2022"+product);
-        }
-    }
     @Override
 
     public String toString() {
         return "@"+ username + " <Name: " + name + ", Address: " + address + ">";
-                //+ ", Total price of the order: " + decfor.format(totalPrice)
-                //+ "\n \t " + getListOfProducts();
     }
 
 }

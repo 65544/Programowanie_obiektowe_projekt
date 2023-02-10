@@ -13,16 +13,6 @@ public class Product {
     public double getPrice() {
         return price;
     }
-
-    public void changeName(String newName)
-    {
-        this.name = newName;
-    }
-    public void changePrice(double newPrice)
-    {
-        this.price = newPrice;
-    }
-
     @Override
     public String toString() {
         return "Name: " + name + ", Price: " + price + "$";

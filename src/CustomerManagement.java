@@ -10,9 +10,7 @@ public class CustomerManagement extends OnlineOrderQueue {
     static HashMap<String, String> usernamePasswordHashMap = new HashMap<>();
     private static int customerID = 1;
 
-    public static int getCustomerID() {
-        return customerID;
-    }
+
 
     public static void addCustomer(Customer customer){
 
@@ -23,24 +21,9 @@ public class CustomerManagement extends OnlineOrderQueue {
         usernamePasswordHashMap.put(customer.getUsername(), customer.getPassword());
     }
 
-    public static Customer getCustomer(String customerName) {
-        for (Customer customer : customers) {
-            if (customer.getName().equals(customerName)) {
-                return customer;
-            }
-        }
-        return null;
-    }
-
     public static List<Customer> getCustomers() {
         return customers;
     }
-
-    public void removeCustomer(Customer customer)
-    {
-        customers.remove(customer);
-    }
-
     @Override
     public String toString() {
         StringBuilder customersString = new StringBuilder();

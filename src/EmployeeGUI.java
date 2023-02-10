@@ -101,9 +101,16 @@ public class EmployeeGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Product product = new Product(nameOfProduct.getText(), Double.parseDouble(priceOfProduct.getText()));
-                ProductManagement.addProduct(product);
-                productsList.setListData(ProductManagement.getProducts().toArray());
+                try
+                {
+                    Product product = new Product(nameOfProduct.getText(), Double.parseDouble(priceOfProduct.getText()));
+                    ProductManagement.addProduct(product);
+                    productsList.setListData(ProductManagement.getProducts().toArray());
+                }catch(NumberFormatException exception)
+                {
+                    JOptionPane.showMessageDialog(jframe, "Price isn't a number!",
+                            "Wrong price", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         deleteProduct.addActionListener(new ActionListener() {

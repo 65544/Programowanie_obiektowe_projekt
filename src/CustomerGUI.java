@@ -13,7 +13,6 @@ public class CustomerGUI{
     private JButton createCustomerButton;
     private JList productsList;
     private JButton addToCartButton;
-    private JTextField customerNameTextField;
     private JList customerProductsList;
 
     private JButton loginButton;
@@ -30,7 +29,6 @@ public class CustomerGUI{
 
     // Declare HashMap here
     HashMap<Customer,List<Product>> customerProductsMap = new HashMap<>();
-    HashMap<String,Customer> usernameCustomerMap = new HashMap<>();
     HashMap<String, String> usernamePasswordMap = new HashMap<>();
 
 
@@ -54,6 +52,8 @@ public class CustomerGUI{
         passwordField2.setBorder(title);
         title = BorderFactory.createTitledBorder("List of products");
         productsList.setBorder(title);
+        title = BorderFactory.createTitledBorder("Cart");
+        customerProductsList.setBorder(title);
         Timer refreshTimer = new Timer(10000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +80,6 @@ public class CustomerGUI{
                             "Choose other username", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    // Create customer with data from text fields
                     Customer customer = new Customer(nameTextField.getText(), addressTextField.getText(), usernameTextField.getText(), String.valueOf(passwordField2.getPassword()));
                     CustomerManagement.addCustomer(customer);
                     customerProductsMap.put(customer, new ArrayList<>());
@@ -93,7 +92,6 @@ public class CustomerGUI{
         addToCartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Get product and customer from GUI
                 Customer customer = CustomerManagement.usernameCustomerHashMap.get(userLoggedInLabel.getText());
 
                 Product product = (Product) productsList.getSelectedValue();
@@ -109,15 +107,12 @@ public class CustomerGUI{
                             "User not logged in", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    // Add product to customer's list of products
                     List<Product> products = customer.getListOfProducts();
                     if (products == null) {
                         products = new ArrayList<>();
                         customerProductsMap.put(customer, products);
                     }
                     customer.addProductToCart(product, 1);
-
-                    // Update customer's product list
                     customerProductsList.setListData(products.toArray());
                 }
             }
@@ -125,8 +120,6 @@ public class CustomerGUI{
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 String username = loginTextField.getText();
                 String password = String.valueOf(passwordField1.getPassword());
                 if (CustomerManagement.usernameCustomerHashMap.containsKey(loginTextField.getText()))
@@ -135,7 +128,6 @@ public class CustomerGUI{
                     {
                         userLoggedInLabel.setText(loginTextField.getText());
                         customerProductsList.setListData(CustomerManagement.usernameCustomerHashMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
-
                     }
                     else
                     {
@@ -161,7 +153,6 @@ public class CustomerGUI{
                 if(OnlineOrderQueue.orderQueue.stream().noneMatch(n -> n.getCustomer().equals(customer))) {
                     OnlineOrderQueue.addOrder(order);
                 }
-
                 customerProductsList.setModel(new DefaultListModel());
             }
         });

@@ -3,7 +3,6 @@ import java.util.Queue;
 
 public class OnlineOrderQueue extends OrderQueue {
     static Queue<Order> orderQueue = new LinkedList<>();
-    // Metoda pozwalająca dodać zamówienie do kolejki
     public static void addOrder(Order order) {
         try {
             if (order.getListOfProducts().isEmpty()) {
@@ -15,7 +14,6 @@ public class OnlineOrderQueue extends OrderQueue {
 
         }
     }
-    // Metoda pozwalająca obsłużyć zamówienie
     public Order getOrder() {
 
         return orderQueue.poll();

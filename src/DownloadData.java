@@ -9,15 +9,6 @@ import java.util.Map;
 public class DownloadData implements DownloadInterface {
     static Map<String, List<Product>> productMap = new HashMap<>();
     static Map<String, List<Customer>> customerMap = new HashMap<>();
-
-    public static Map<String, List<Product>> getProductMap() {
-        return productMap;
-    }
-
-    public static Map<String, List<Customer>> getCustomerMap() {
-        return customerMap;
-    }
-
     @Override
     public List<Product> downloadProductData(String fileName) {
         List<Product> products = new ArrayList<>();
