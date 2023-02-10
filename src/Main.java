@@ -106,7 +106,7 @@ public class Main {
 //        System.out.println(Customer4.getCustomerID());
 //
 //        // Pobieramy dane użytkowników z pliku .csv
-//        List<Customer> downloadedCustomerData = downloadData.downloadCustomerData("customerData1.csv");
+//       List<Customer> downloadedCustomerData = downloadData.downloadCustomerData("customerData1.csv");
 //        System.out.println(downloadData.customerMap.get("customerData1.csv"));
 //        System.out.println(downloadedCustomerData.get(1));
 //

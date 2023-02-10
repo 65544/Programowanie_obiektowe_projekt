@@ -7,8 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 public class DownloadData implements DownloadInterface {
-    Map<String, List<Product>> productMap = new HashMap<>();
-    Map<String, List<Customer>> customerMap = new HashMap<>();
+    static Map<String, List<Product>> productMap = new HashMap<>();
+    static Map<String, List<Customer>> customerMap = new HashMap<>();
+
+    public static Map<String, List<Product>> getProductMap() {
+        return productMap;
+    }
+
+    public static Map<String, List<Customer>> getCustomerMap() {
+        return customerMap;
+    }
 
     @Override
     public List<Product> downloadProductData(String fileName) {

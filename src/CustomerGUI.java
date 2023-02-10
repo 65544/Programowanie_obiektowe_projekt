@@ -74,7 +74,7 @@ public class CustomerGUI{
         createCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(usernamePasswordMap.containsKey(usernameTextField.getText()))
+                if(CustomerManagement.usernameCustomerHashMap.containsKey(usernameTextField.getText()))
                 {
                     JOptionPane.showMessageDialog(jframe, "Username already taken!",
                             "Choose other username", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +85,7 @@ public class CustomerGUI{
                     CustomerManagement.addCustomer(customer);
                     customerProductsMap.put(customer, new ArrayList<>());
                     usernamePasswordMap.put(usernameTextField.getText(), String.valueOf(passwordField2.getPassword()));
-                    usernameCustomerMap.put(usernameTextField.getText(), customer);
+                    CustomerManagement.usernameCustomerHashMap.put(usernameTextField.getText(), customer);
                 }
             }
         });
@@ -94,7 +94,7 @@ public class CustomerGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Get product and customer from GUI
-                Customer customer = usernameCustomerMap.get(userLoggedInLabel.getText());
+                Customer customer = CustomerManagement.usernameCustomerHashMap.get(userLoggedInLabel.getText());
 
                 Product product = (Product) productsList.getSelectedValue();
 
@@ -129,12 +129,12 @@ public class CustomerGUI{
 
                 String username = loginTextField.getText();
                 String password = String.valueOf(passwordField1.getPassword());
-                if (usernamePasswordMap.containsKey(loginTextField.getText()))
+                if (CustomerManagement.usernameCustomerHashMap.containsKey(loginTextField.getText()))
                 {
-                    if((usernamePasswordMap.get(loginTextField.getText()).equals(password)))
+                    if((CustomerManagement.usernamePasswordHashMap.get(loginTextField.getText()).equals(password)))
                     {
                         userLoggedInLabel.setText(loginTextField.getText());
-                        customerProductsList.setListData(usernameCustomerMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
+                        customerProductsList.setListData(CustomerManagement.usernameCustomerHashMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
 
                     }
                     else
@@ -154,14 +154,15 @@ public class CustomerGUI{
         placeOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Customer customer = usernameCustomerMap.get(userLoggedInLabel.getText());
+                Customer customer = CustomerManagement.usernameCustomerHashMap.get(userLoggedInLabel.getText());
                 List<Product> products = customer.getListOfProducts();
+
                 Order order = new Order(products, customer);
-                OnlineOrderQueue.addOrder(order);
+                if(OnlineOrderQueue.orderQueue.stream().noneMatch(n -> n.getCustomer().equals(customer))) {
+                    OnlineOrderQueue.addOrder(order);
+                }
+
                 customerProductsList.setModel(new DefaultListModel());
-//                products.clear();
-//                customer.clearTotalPrice();
-//                customerProductsList.setListData(usernameCustomerMap.get(userLoggedInLabel.getText()).getListOfProducts().toArray());
             }
         });
     }}

@@ -6,6 +6,8 @@ public class CustomerManagement extends OnlineOrderQueue {
 
     static List<Customer> customers = new ArrayList<>();
     static HashMap<String, Customer> customerHashMap = new HashMap<>();
+    static HashMap<String, Customer> usernameCustomerHashMap = new HashMap<>();
+    static HashMap<String, String> usernamePasswordHashMap = new HashMap<>();
     private static int customerID = 1;
 
     public static int getCustomerID() {
@@ -17,6 +19,8 @@ public class CustomerManagement extends OnlineOrderQueue {
         customers.add(customer);
         customerHashMap.put("Customer"+customerID, customer);
         customerID++;
+        usernameCustomerHashMap.put(customer.getUsername(), customer);
+        usernamePasswordHashMap.put(customer.getUsername(), customer.getPassword());
     }
 
     public static Customer getCustomer(String customerName) {
